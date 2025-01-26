@@ -2,7 +2,6 @@ import React from 'react'
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 import Link from 'next/link';
-import product from '@/sanity/schemaTypes/product'
 
 const ProductListing = ({ product }: { product: Product }) => {
     return (
