@@ -1,7 +1,6 @@
 import Header from '@/app/components/header'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
-import product from '@/sanity/schemaTypes/product'
 import React from 'react'
 import Image from 'next/image'
 const page = async({params:{id}}:{params:{id:string}}) => {
