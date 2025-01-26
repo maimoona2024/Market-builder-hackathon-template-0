@@ -12,24 +12,16 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
+    files: ["src/app/components/header.tsx"],
     rules: {
-      "@typescript-eslint/no-unused-vars": "off", // Ignore unused variables and imports
-      "import/no-anonymous-default-export": "off", // Ignore anonymous default export warnings
+      "@typescript-eslint/no-unused-vars": "off",
     },
-    overrides: [
-      {
-        files: ["./src/app/components/header.tsx"], // Apply rule changes only to the header component
-        rules: {
-          "@typescript-eslint/no-unused-vars": "off",
-        },
-      },
-      {
-        files: ["./src/sanity/schemaTypes/product.ts"], // Apply rule changes only to the product schema
-        rules: {
-          "import/no-anonymous-default-export": "off",
-        },
-      },
-    ],
+  },
+  {
+    files: ["src/sanity/schemaTypes/product.ts"],
+    rules: {
+      "import/no-anonymous-default-export": "off",
+    },
   },
 ];
 
