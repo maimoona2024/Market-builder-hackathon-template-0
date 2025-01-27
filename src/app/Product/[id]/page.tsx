@@ -1,33 +1,34 @@
 import Header from '@/app/components/header'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
+import product from '@/sanity/schemaTypes/product'
 import React from 'react'
 import Image from 'next/image'
 
 type PageProps = {
   params: {
-    id: string
-  }
-}
+    id: string;
+  };
+};
 
-const page = async ({ params: { id } }: PageProps) => {
+const page = async({ params: { id } }: PageProps) => {
   const query = `*[_type == "product" && _id == $id]{
     name,
     price,
     description,
     category,
-    "image": image.asset._ref,
-    "id": _id
-  }[0]`
+    "image":image.asset._ref,
+    "id":_id
+  }[0]`;
 
-  const product: Product | null = await client.fetch(query, { id })
+  const product: Product | null = await client.fetch(query, { id });
 
   if (!product) {
     return (
       <div>
         <h1>Sorry! Product not found.</h1>
       </div>
-    )
+    );
   }
 
   return (
@@ -35,7 +36,7 @@ const page = async ({ params: { id } }: PageProps) => {
       <div className="overflow-x-hidden">
         {/* Updated Header with better responsiveness */}
         <Header />
-
+        
         <div className="flex flex-col lg:flex-row gap-8 mt-8">
           {/* Left Side: Small Images */}
           <div
@@ -63,6 +64,11 @@ const page = async ({ params: { id } }: PageProps) => {
               {product.description}
             </p>
 
+            {/* Size Options */}
+
+            {/* Color Options */}
+
+            {/* Quantity and Add to Cart */}
             <div className="flex items-center gap-4 mt-6 flex-wrap">
               <div className="flex items-center border p-2 gap-4">
                 <button aria-label="Decrease quantity">-</button>
@@ -73,6 +79,7 @@ const page = async ({ params: { id } }: PageProps) => {
 
             <hr className="my-6" />
 
+            {/* Additional Information */}
             <div className="space-y-4">
               <div className="flex justify-between">
                 <span>SKU:</span>
@@ -113,7 +120,7 @@ const page = async ({ params: { id } }: PageProps) => {
         </h2>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
