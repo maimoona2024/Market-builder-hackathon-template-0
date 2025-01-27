@@ -3,46 +3,53 @@ import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import React from 'react'
 import Image from 'next/image'
-const page = async({params:{id}}:{params:{id:string}}) => {
-    const query = `*[_type == "product" && _id == $id]{
+
+type PageProps = {
+  params: {
+    id: string
+  }
+}
+
+const page = async ({ params: { id } }: PageProps) => {
+  const query = `*[_type == "product" && _id == $id]{
     name,
     price,
     description,
     category,
-    "image":image.asset._ref,
-    "id":_id
-    }[0]`
+    "image": image.asset._ref,
+    "id": _id
+  }[0]`
 
-    const product:Product | null = await client.fetch(query, {id})
+  const product: Product | null = await client.fetch(query, { id })
 
-    if(!product){
-        return(
-            <div>
-                <h1>Sorry! Product not found.</h1>
-            </div>
-        )
-    }
+  if (!product) {
+    return (
+      <div>
+        <h1>Sorry! Product not found.</h1>
+      </div>
+    )
+  }
+
   return (
     <div key={product.id}>
-        <div className="overflow-x-hidden">
-      {/* Updated Header with better responsiveness */}
-      <Header />
-      
-      <div className="flex flex-col lg:flex-row gap-8 mt-8">
-                {/* Left Side: Small Images */}
-                <div
-              key={product.id}
-              className="flex flex-col text-left h-[250px] w-[150px] sm:h-[300px] sm:w-[300px]"
-            >
-              <Image
-                src={urlFor(product.image).url()}
-                alt={product.name}
-                height={300}
-                width={300}
-                className="rounded-lg object-cover"
-              />
-              
-            </div>
+      <div className="overflow-x-hidden">
+        {/* Updated Header with better responsiveness */}
+        <Header />
+
+        <div className="flex flex-col lg:flex-row gap-8 mt-8">
+          {/* Left Side: Small Images */}
+          <div
+            key={product.id}
+            className="flex flex-col text-left h-[250px] w-[150px] sm:h-[300px] sm:w-[300px]"
+          >
+            <Image
+              src={urlFor(product.image).url()}
+              alt={product.name}
+              height={300}
+              width={300}
+              className="rounded-lg object-cover"
+            />
+          </div>
 
           {/* Right Side: Product Details */}
           <div className="flex-1 space-y-4">
@@ -53,28 +60,19 @@ const page = async({params:{id}}:{params:{id:string}}) => {
               <span className="text-gray-700 text-sm sm:text-base">(5 Customer Reviews)</span>
             </div>
             <p className="mt-4 text-gray-700 text-sm sm:text-base">
-             {product.description}
+              {product.description}
             </p>
 
-            {/* Size Options */}
-            
-
-            {/* Color Options */}
-            
-
-            {/* Quantity and Add to Cart */}
             <div className="flex items-center gap-4 mt-6 flex-wrap">
               <div className="flex items-center border p-2 gap-4">
                 <button aria-label="Decrease quantity">-</button>
                 <span>1</span>
                 <button aria-label="Increase quantity">+</button>
               </div>
-              
             </div>
 
             <hr className="my-6" />
 
-            {/* Additional Information */}
             <div className="space-y-4">
               <div className="flex justify-between">
                 <span>SKU:</span>
@@ -90,7 +88,6 @@ const page = async({params:{id}}:{params:{id:string}}) => {
               </div>
               <div className="flex justify-between items-center mt-4">
                 <span>Share:</span>
-                
               </div>
             </div>
           </div>
@@ -106,7 +103,6 @@ const page = async({params:{id}}:{params:{id:string}}) => {
             <span className="text-gray-400">Reviews [5]</span>
           </h3>
           <p className="text-sm sm:text-base leading-6">
-            
             {product.description}
           </p>
         </div>
@@ -115,11 +111,8 @@ const page = async({params:{id}}:{params:{id:string}}) => {
         <h2 className="text-2xl sm:text-3xl font-medium mt-8">
           Related Products
         </h2>
-        
-            
-         
-        </div>
-   </div>  
+      </div>
+    </div>
   )
 }
 
